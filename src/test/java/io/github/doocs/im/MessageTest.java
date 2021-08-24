@@ -20,7 +20,9 @@ public class MessageTest {
     private static final IMClient client;
 
     static {
-        InputStream resourceAsStream = MessageTest.class.getClassLoader().getResourceAsStream("app.properties");
+        //InputStream resourceAsStream = MessageTest.class.getClassLoader().getResourceAsStream("app.properties");
+        //根据自己的配置文件名称填写,取自"src/test/resources/XXXX.yml"文件
+        InputStream resourceAsStream = MessageTest.class.getClassLoader().getResourceAsStream("application-pre.yml");
         try {
             properties.load(resourceAsStream);
         } catch (IOException e) {
@@ -32,11 +34,14 @@ public class MessageTest {
         client = IMClient.getInstance(appId, identifier, key);
     }
 
+    /*
+    消息 - 发送文本消息
+     */
     @Test
     public void testSendMsg() throws IOException {
         SendMsgRequest request = new SendMsgRequest();
-        request.setFromAccount("test1");
-        request.setToAccount("test2");
+        request.setFromAccount("user0");
+        request.setToAccount("user1");
         request.setSyncOtherMachine(1);
         request.setMsgRandom(123);
         request.setMsgTimeStamp(1557387418);
@@ -44,7 +49,59 @@ public class MessageTest {
         MsgBodyItem item = new MsgBodyItem();
         item.setMsgType("TIMTextElem");
         MsgContentItem contentItem = new MsgContentItem();
-        contentItem.setText("hello world");
+        contentItem.setText("[难过]");
+        item.setMsgContent(contentItem);
+        request.setMsgBody(Collections.singletonList(item));
+        SendMsgResult result = client.message.sendMsg(request);
+        System.out.println(result);
+        Assert.assertEquals("OK", result.getActionStatus());
+    }
+
+
+    /*
+    消息 - 发送 - 地理位置消息
+     */
+    @Test
+    public void testSendMsgLocation() throws IOException {
+        SendMsgRequest request = new SendMsgRequest();
+        request.setFromAccount("user0");
+        request.setToAccount("user1");
+        request.setSyncOtherMachine(1);
+        request.setMsgRandom(123);
+        request.setMsgTimeStamp(1557387418);
+        request.setMsgLifeTime(604800);
+        MsgBodyItem item = new MsgBodyItem();
+        item.setMsgType("TIMLocationElem");
+        MsgContentLocationItem contentItem = new MsgContentLocationItem();
+        contentItem.setDesc("单元测试 - 地理信息");
+        contentItem.setLatitude(29.340656774469956);
+        contentItem.setLongitude(116.77497920478824);
+        item.setMsgContent(contentItem);
+        request.setMsgBody(Collections.singletonList(item));
+        SendMsgResult result = client.message.sendMsg(request);
+        System.out.println(result);
+        Assert.assertEquals("OK", result.getActionStatus());
+    }
+
+
+    /*
+消息 - 发送 - 表情
+ */
+    @Test
+    public void testSendMsgFace() throws IOException {
+        SendMsgRequest request = new SendMsgRequest();
+        request.setFromAccount("user0");
+        request.setToAccount("user1");
+        request.setSyncOtherMachine(1);
+        request.setMsgRandom(123);
+        request.setMsgTimeStamp(1557387418);
+        request.setMsgLifeTime(604800);
+        MsgBodyItem item = new MsgBodyItem();
+        item.setMsgType("TIMFaceElem");
+//        item.setMsgType("TIMTextElem");
+        MsgContentFaceItem contentItem = new MsgContentFaceItem();
+        contentItem.setIndex(3);
+        contentItem.setData("[调皮]");
         item.setMsgContent(contentItem);
         request.setMsgBody(Collections.singletonList(item));
         SendMsgResult result = client.message.sendMsg(request);

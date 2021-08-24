@@ -1,0 +1,4 @@
+#application.yml
+key:秘钥
+identifier:管理员Id
+appId:AppId
