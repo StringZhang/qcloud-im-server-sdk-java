@@ -49,7 +49,7 @@ public class MessageTest {
         MsgBodyItem item = new MsgBodyItem();
         item.setMsgType("TIMTextElem");
         MsgContentItem contentItem = new MsgContentItem();
-        contentItem.setText("[难过]");
+        contentItem.setText("fuck 敏感词过滤");
         item.setMsgContent(contentItem);
         request.setMsgBody(Collections.singletonList(item));
         SendMsgResult result = client.message.sendMsg(request);
@@ -85,8 +85,8 @@ public class MessageTest {
 
 
     /*
-消息 - 发送 - 表情
- */
+    消息 - 发送 - 表情
+     */
     @Test
     public void testSendMsgFace() throws IOException {
         SendMsgRequest request = new SendMsgRequest();
@@ -98,10 +98,82 @@ public class MessageTest {
         request.setMsgLifeTime(604800);
         MsgBodyItem item = new MsgBodyItem();
         item.setMsgType("TIMFaceElem");
-//        item.setMsgType("TIMTextElem");
         MsgContentFaceItem contentItem = new MsgContentFaceItem();
         contentItem.setIndex(3);
         contentItem.setData("[调皮]");
+        item.setMsgContent(contentItem);
+        request.setMsgBody(Collections.singletonList(item));
+        SendMsgResult result = client.message.sendMsg(request);
+        System.out.println(result);
+        Assert.assertEquals("OK", result.getActionStatus());
+    }
+
+    /*
+     消息 - 发送 - 自定义消息
+     */
+    @Test
+    public void testSendMsgCustomer() throws IOException {
+        SendMsgRequest request = new SendMsgRequest();
+        request.setFromAccount("user0");
+        request.setToAccount("user1");
+        request.setSyncOtherMachine(1);
+        request.setMsgRandom(123);
+        request.setMsgTimeStamp(1557387418);
+        request.setMsgLifeTime(604800);
+        MsgBodyItem item = new MsgBodyItem();
+        item.setMsgType("TIMCustomElem");
+        MsgContentCustomerItem contentItem = new MsgContentCustomerItem();
+        contentItem.setExt("ExtStr");
+        contentItem.setData("[调皮]");
+        item.setMsgContent(contentItem);
+        request.setMsgBody(Collections.singletonList(item));
+        SendMsgResult result = client.message.sendMsg(request);
+        System.out.println(result);
+        Assert.assertEquals("OK", result.getActionStatus());
+    }
+
+    /*
+ 消息 - 发送 - 语音消息
+ */
+    @Test
+    public void testSendMsgSound() throws IOException {
+        SendMsgRequest request = new SendMsgRequest();
+        request.setFromAccount("user0");
+        request.setToAccount("user1");
+        request.setSyncOtherMachine(1);
+        request.setMsgRandom(123);
+        request.setMsgTimeStamp(1557387418);
+        request.setMsgLifeTime(604800);
+        MsgBodyItem item = new MsgBodyItem();
+        item.setMsgType("TIMCustomElem");
+        MsgContentCustomerItem contentItem = new MsgContentCustomerItem();
+        contentItem.setExt("ExtStr");
+        contentItem.setData("[调皮]");
+        item.setMsgContent(contentItem);
+        request.setMsgBody(Collections.singletonList(item));
+        SendMsgResult result = client.message.sendMsg(request);
+        System.out.println(result);
+        Assert.assertEquals("OK", result.getActionStatus());
+    }
+
+
+    /*
+     消息 - 发送 - 图像消息
+     */
+    @Test
+    public void testSendMsgImage() throws IOException {
+        SendMsgRequest request = new SendMsgRequest();
+        request.setFromAccount("user0");
+        request.setToAccount("user1");
+        request.setSyncOtherMachine(1);
+        request.setMsgRandom(123);
+        request.setMsgTimeStamp(1557387418);
+        request.setMsgLifeTime(604800);
+        MsgBodyItem item = new MsgBodyItem();
+        item.setMsgType("TIMCustomElem");
+        MsgContentImageItem contentItem = new MsgContentImageItem();
+        contentItem.setUUID("1853095_D61040894AC3DE44CDFFFB3EC7EB720F");
+        contentItem.setImageFormat(3);
         item.setMsgContent(contentItem);
         request.setMsgBody(Collections.singletonList(item));
         SendMsgResult result = client.message.sendMsg(request);
