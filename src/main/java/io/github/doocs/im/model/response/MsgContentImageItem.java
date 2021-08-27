@@ -25,6 +25,48 @@ public class MsgContentImageItem {
      */
     public List<MsgContentImageItemInfo> ImageInfoArray;
 
+//
+//    enum MsgContentImageItemFormat {
+//        /*
+//        图片格式:JPG
+//         */
+//        JPG(1),
+//        /*
+//        图片格式:GIF
+//         */
+//        GIF (2),
+//        /*
+//        图片格式:PNG
+//         */
+//        PNG(3),
+//        /*
+//        图片格式:BMP
+//         */
+//        BMP(4),
+//        /*
+//        图片格式:其它
+//         */
+//        OTHNER(255);
+//
+//        private final Integer value;
+//
+//        private MsgContentImageItemFormat(Integer value){
+//            this.value = value;
+//        }
+//
+//        public MsgContentImageItemInfo.MsgContentImageItemType valueOf(Integer value){
+//            switch (value){
+//                case 1:
+//                    return MsgContentImageItemInfo.MsgContentImageItemType.ORIGINAL;
+//                case 2:
+//                    return MsgContentImageItemInfo.MsgContentImageItemType.LARGER;
+//                case 3:
+//                    return MsgContentImageItemInfo.MsgContentImageItemType.THUMBNAIL;
+//            }
+//            return null;
+//        }
+//
+//    }
 }
 
 

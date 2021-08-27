@@ -7,9 +7,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @author bingo
@@ -170,10 +168,42 @@ public class MessageTest {
         request.setMsgTimeStamp(1557387418);
         request.setMsgLifeTime(604800);
         MsgBodyItem item = new MsgBodyItem();
-        item.setMsgType("TIMCustomElem");
+        item.setMsgType("TIMImageElem");
         MsgContentImageItem contentItem = new MsgContentImageItem();
         contentItem.setUUID("1853095_D61040894AC3DE44CDFFFB3EC7EB720F");
         contentItem.setImageFormat(3);
+        List<MsgContentImageItemInfo> contentImageItemInfos = new ArrayList<>();
+        contentImageItemInfos.add(new MsgContentImageItemInfo(1,0,0,0,"https://z3.ax1x.com/2021/08/27/hKquzd.png"));
+        contentImageItemInfos.add(new MsgContentImageItemInfo(2,0,0,0,"https://z3.ax1x.com/2021/08/27/hKqMQA.png"));
+        contentImageItemInfos.add(new MsgContentImageItemInfo(3,0,0,0,"https://z3.ax1x.com/2021/08/27/hKqnRH.png"));
+        contentItem.setImageInfoArray(contentImageItemInfos);
+        item.setMsgContent(contentItem);
+
+        request.setMsgBody(Collections.singletonList(item));
+        SendMsgResult result = client.message.sendMsg(request);
+        System.out.println(result);
+        Assert.assertEquals("OK", result.getActionStatus());
+    }
+
+    /*
+    消息 - 发送 - 文件消息
+    */
+    @Test
+    public void testSendMsgFile() throws IOException {
+        SendMsgRequest request = new SendMsgRequest();
+        request.setFromAccount("user2");
+        request.setToAccount("user3");
+        request.setSyncOtherMachine(1);
+        request.setMsgRandom(123);
+        request.setMsgTimeStamp(1557387417);
+        request.setMsgLifeTime(604800);
+        MsgBodyItem item = new MsgBodyItem();
+        item.setMsgType("TIMFileElem");
+        MsgContentFileItem contentItem = new MsgContentFileItem();
+        contentItem.setUrl("http://plat.dev.yswx.cn/upload/202012/test/test.txt");
+        contentItem.setFileSize(10182);
+        contentItem.setFileName("文件名称");
+        contentItem.setDownloadFlag(2);
         item.setMsgContent(contentItem);
         request.setMsgBody(Collections.singletonList(item));
         SendMsgResult result = client.message.sendMsg(request);

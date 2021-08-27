@@ -1,14 +1,23 @@
 package io.github.doocs.im.model.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 /*
 原图、缩略图或者大图下载信息。
  */
+@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MsgContentImageItemInfo {
 
     /*
  图片类型： 1-原图，2-大图，3-缩略图
   */
-    public MsgContentImageItemType Type;
+    public Integer Type;
     /*
     图片数据大小，单位：字节
      */
@@ -28,7 +37,7 @@ public class MsgContentImageItemInfo {
 
 
 
-    enum MsgContentImageItemType {
+     enum MsgContentImageItemType {
         /*
         原图
          */
